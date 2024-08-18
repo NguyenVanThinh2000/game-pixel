@@ -8,6 +8,7 @@ import {
 } from "../constants/game";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector2";
+import { GameLoop } from "./GameLoop";
 
 export const useCanvas = () => {
   useEffect(() => {
@@ -52,12 +53,13 @@ export const useCanvas = () => {
       heroSprite.drawImage(ctx, heroPosX, heroPosY);
     };
 
-    const interval = setInterval(() => {
-      draw();
-    }, FPS);
-
-    return () => {
-      clearInterval(interval);
+    const update = () => {
+      // Updating entities in the game
+      heroPosition.x += 1;
     };
+
+    const gameLoop = new GameLoop(update, draw);
+    gameLoop.start();
+    // gameLoop.stop();
   });
 };
